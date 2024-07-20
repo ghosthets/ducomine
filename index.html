@@ -1,0 +1,60 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Duino-Coin Web Miner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    #miner-container {
+      width: 80%;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    #hashrate-container {
+      width: 80%;
+      margin: 20px auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+
+    #hashrate-text {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    #hashrate-value {
+      color: #00698f;
+    }
+  </style>
+</head>
+<body>
+  <h1>Duino-Coin Web Miner</h1>
+  <div id="miner-container">
+    <iframe src="https://server.duinocoin.com/webminer.html?username=ghosthets&threads=&rigid=&keyinput=ghosthets" frameborder="0" width="100%" height="500"></iframe>
+  </div>
+  <div id="hashrate-container">
+    <p id="hashrate-text">Hashrate: <span id="hashrate-value">-</span></p>
+  </div>
+
+  <script>
+    const iframe = document.querySelector('iframe');
+    const hashrateText = document.querySelector('#hashrate-text');
+    const hashrateValue = document.querySelector('#hashrate-value');
+
+    iframe.onload = function() {
+      const minerPage = iframe.contentWindow.document;
+      const hashrateElement = minerPage.querySelector('#total-hashrate');
+
+      setInterval(function() {
+        const hashrate = hashrateElement.textContent;
+        hashrateValue.textContent = hashrate;
+      }, 60000); // update every 1 minute
+    };
+  </script>
+</body>
+</html>
